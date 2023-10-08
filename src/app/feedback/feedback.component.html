@@ -1,0 +1,22 @@
+<div class="feedback-container">
+    <h2>Leave Feedback</h2>
+    <form (submit)="submitFeedback()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" [(ngModel)]="feedback.name" name="name" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="feedbackText">Feedback:</label>
+        <textarea id="feedbackText" [(ngModel)]="feedback.text" name="text" rows="4" required></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="rating">Rating:</label>
+        <app-star-rating [(ngModel)]="feedback.rating" [readOnly]="false"></app-star-rating>
+      </div>
+      
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </div>
+  

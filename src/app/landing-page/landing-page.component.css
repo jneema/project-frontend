@@ -1,0 +1,14 @@
+.section {
+    background-color: #0d6efd;
+    color: white;
+    height: 200px;
+    display: grid;
+    place-items: center;
+}
+
+.center-table {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* height: 100vh; */
+}
