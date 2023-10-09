@@ -10,6 +10,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { StarRatingModule } from 'angular-star-rating';
+import { StarRatingComponent } from './star-rating/star-rating.component';
+import { ArchivesService } from './archives.service';
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import { StarRatingModule } from 'angular-star-rating';
     ArchivesComponent,
     FeedbackComponent,
     NavbarComponent,
+    StarRatingComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,7 @@ import { StarRatingModule } from 'angular-star-rating';
     StarRatingModule.forRoot()
 
   ],
-  providers: [],
+  providers: [ArchivesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

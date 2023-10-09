@@ -12,6 +12,7 @@ interface SearchHistoryItem {
 export class ArchivesService {
   private localStorageKey = 'searchHistory';
   private searchHistory: SearchHistoryItem[] = [];
+  private archivesClearedKey = 'archivesCleared';
 
   constructor() {
     // Load search history from localStorage when the service is created
@@ -20,7 +21,10 @@ export class ArchivesService {
       this.searchHistory = JSON.parse(storedHistory);
     }
   }
-
+  init(initialData: SearchHistoryItem[]): void {
+    // Initialize the search history with the provided initial data
+    this.searchHistory = initialData;
+  }
   addSearchHistory(query: string): void {
     const date = new Date(); // Capture the current date and time
     const timestamp = date.getTime(); // Capture the current timestamp (milliseconds since epoch)
@@ -36,5 +40,21 @@ export class ArchivesService {
       return JSON.parse(searchHistory);
     }
     return [];
+  }
+
+  clearArchives(): void {
+    localStorage.removeItem(this.localStorageKey);
+    this.markArchivesAsCleared();
+    this.searchHistory = []; // Clear the local data as well
+
+  }
+
+  
+  areArchivesCleared(): boolean {
+    return localStorage.getItem(this.archivesClearedKey) === 'true';
+  }
+
+  private markArchivesAsCleared(): void {
+    localStorage.setItem(this.archivesClearedKey, 'true');
   }
 }

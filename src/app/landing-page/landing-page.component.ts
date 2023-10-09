@@ -14,6 +14,7 @@ export class LandingPageComponent implements OnInit {
   constructor(private http: HttpClient, private archivesService: ArchivesService ) {}
 
   ngOnInit(): void {
+    
     // Fetch data for the default selected option when the component initializes
     this.fetchData(this.selectedOption);
   }
@@ -50,6 +51,8 @@ export class LandingPageComponent implements OnInit {
 
   onDropdownChange(event: any): void {
     this.selectedOption = event.target.value;
+    // Initialize the archives service when an option is selected
+    this.archivesService = new ArchivesService();
     // Fetch data for the selected option and sort it
     this.fetchData(this.selectedOption);
   }

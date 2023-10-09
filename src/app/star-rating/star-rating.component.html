@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="star-rating.component.css">
+</head>
+<body>
+    
+        <div class="form-group">
+            <label for="rating">Rating:</label>
+            <div class="star-rating">
+              <span class="star" (click)="setRating(1)" [ngClass]="{'filled': selectedRating >= 1}">&#9733;</span>
+              <span class="star" (click)="setRating(2)" [ngClass]="{'filled': selectedRating >= 2}">&#9733;</span>
+              <span class="star" (click)="setRating(3)" [ngClass]="{'filled': selectedRating >= 3}">&#9733;</span>
+              <span class="star" (click)="setRating(4)" [ngClass]="{'filled': selectedRating >= 4}">&#9733;</span>
+              <span class="star" (click)="setRating(5)" [ngClass]="{'filled': selectedRating >= 5}">&#9733;</span>
+            </div>
+          </div>      
+      
+</body>
+</html>
