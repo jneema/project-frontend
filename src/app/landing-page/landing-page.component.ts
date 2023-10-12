@@ -27,13 +27,16 @@ export class LandingPageComponent implements OnInit {
         apiUrl = 'http://localhost:8000/allreviews';
         break;
       case 'option2':
-        apiUrl = 'http://localhost:8000/bettingapps';
+        apiUrl = 'http://localhost:8000/betting_apps';
         break;
       case 'option3':
         apiUrl = 'http://localhost:8000/loanapps';
         break;
       case 'option4':
-        apiUrl = 'http://localhost:8000/mobilebanking';
+        apiUrl = 'http://localhost:8000/telecommunications';
+        break;
+      case 'option5':
+        apiUrl = 'http://localhost:8000/bankingapps';
         break;
       default:
         apiUrl = 'http://localhost:8000/allreviews'; // Default to 'All Reviews'
