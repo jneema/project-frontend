@@ -1,62 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ArchivesService } from '../archives/archives.service';
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
-export class LandingPageComponent implements OnInit {
-  selectedOption = 'option1'; // Default selected option
-  tableData: any[] = [];
+export class LandingPageComponent {
+  searchQuery: string = '';
+  numReviews: number = 100; // Default number of reviews
+  scrapingMessage: string = ''; // Message to display to the user
+  positiveReviewPercentage: number | null = null; // Positive review percentage
 
-  constructor(private http: HttpClient, private archivesService: ArchivesService ) {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
-    
-    // Fetch data for the default selected option when the component initializes
-    this.fetchData(this.selectedOption);
-  }
+  startScraping() {
+    const apiEndpoint = 'http://localhost:8000/scrape_reviews/'; // Update with your FastAPI endpoint URL
 
-  fetchData(option: string): void {
-    let apiUrl: string;
+    const requestPayload = {
+      query: this.searchQuery,
+      numReviews: this.numReviews,
+    };
 
-    switch (option) {
-      case 'option1':
-        apiUrl = 'http://localhost:8000/allreviews';
-        break;
-      case 'option2':
-        apiUrl = 'http://localhost:8000/betting_apps';
-        break;
-      case 'option3':
-        apiUrl = 'http://localhost:8000/loanapps';
-        break;
-      case 'option4':
-        apiUrl = 'http://localhost:8000/telecommunications';
-        break;
-      case 'option5':
-        apiUrl = 'http://localhost:8000/bankingapps';
-        break;
-      default:
-        apiUrl = 'http://localhost:8000/allreviews'; // Default to 'All Reviews'
-    }
+    this.scrapingMessage = 'Scraping in progress...'; // Display a message to indicate the process has started
 
-    // Add the search query to the history
-    this.archivesService.addSearchHistory(option);
+    this.http.post<any>(apiEndpoint, requestPayload).subscribe(
+      (response: any) => {
+        this.scrapingMessage = response.message;
+        this.positiveReviewPercentage = response.positive_review_percentage; // Set the positive review percentage
 
-
-    this.http.get(apiUrl).subscribe((data: any) => {
-      // Sort the data by Positive_Review_Percentage in descending order
-      this.tableData = data.sort((a: any, b: any) => b.Positive_Review_Percentage - a.Positive_Review_Percentage);
-    });
-  }
-
-  onDropdownChange(event: any): void {
-    this.selectedOption = event.target.value;
-    // Initialize the archives service when an option is selected
-    this.archivesService = new ArchivesService();
-    // Fetch data for the selected option and sort it
-    this.fetchData(this.selectedOption);
+        console.log('Scraping completed successfully');
+      },
+      (error) => {
+        this.scrapingMessage = 'Error occurred during scraping';
+        console.error('Error:', error);
+      }
+    );
   }
 }
