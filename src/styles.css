@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+/* Add Bootstrap CSS */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* Add DataTables CSS */
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";

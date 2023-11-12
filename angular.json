@@ -26,7 +26,14 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
+
+              "src/styles.css",
+                {
+    "input": "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
+    "bundleName": "datatables-bootstrap",
+    "inject": false
+  }
             ],
               "scripts": [
                 "node_modules/jquery/dist/jquery.min.js",

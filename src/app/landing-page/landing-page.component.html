@@ -4,29 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-  <div class="container">
+  <div class="container mt-5">
     <h2>Scraping Configuration</h2>
-    <div>
-      <label for="searchQuery">Search Query:</label>
-      <input id="searchQuery" type="text" [(ngModel)]="searchQuery" />
+    <div class="mb-3">
+      <label for="searchQuery" class="form-label">Search Query:</label>
+      <input id="searchQuery" type="text" class="form-control" [(ngModel)]="searchQuery" />
     </div>
-    <div>
-      <label for="numReviews">Number of Reviews:</label>
-      <input id="numReviews" type="number" [(ngModel)]="numReviews" />
+    <div class="mb-3">
+      <label for="numReviews" class="form-label">Number of Reviews:</label>
+      <input id="numReviews" type="number" class="form-control" [(ngModel)]="numReviews" />
     </div>
-    <button (click)="startScraping()">Start Scraping</button>
-    
+    <button class="btn btn-primary" (click)="startScraping()">Start Scraping</button>
+
     <!-- Display the scraping message -->
-    <div *ngIf="scrapingMessage">
+    <div *ngIf="scrapingMessage" class="mt-3 alert alert-info">
       {{ scrapingMessage }}
     </div>
+    
     <!-- Display the positive review percentage if available -->
-<div *ngIf="positiveReviewPercentage !== null">
-  <p>Positive Review Percentage: {{ positiveReviewPercentage.toFixed(2) }}%</p>
-</div>
+    <div *ngIf="positiveReviewPercentage !== null" class="mt-3">
+      <p class="mb-2">Positive Review Percentage: {{ positiveReviewPercentage.toFixed(2) }}%</p>
+      <p *ngIf="tableName !== null" class="mb-2">Table Name: {{ tableName }}</p>
 
+      <button class="btn btn-primary" mb-3 (click)="getLatestTableData()" [disabled]="isTableVisible">
+        {{ isTableVisible ? 'Table Visible' : 'Fetch Latest Table Data' }}
+      </button>
+
+      <!-- Display the table data -->
+      <table *ngIf="isTableVisible && tableData !== null" class="mt-3 table table-bordered" id="dataTable">
+        <thead>
+          <tr>
+            <!-- Modify the following based on your table structure -->
+            <th>Review</th>
+            <th>Sentiment Label</th>
+            <th>Sentiment Score</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of tableData">
+            <td>{{ row.review }}</td>
+            <td>{{ row.sentiment_label }}</td>
+            <td>{{ row.sentiment_score }}</td>
+            <td>{{ row.created_at | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Button to hide the table -->
+      <button class="btn btn-danger" mt-3 *ngIf="isTableVisible" (click)="toggleTableVisibility()">
+        Hide Table
+      </button>
+    </div>
   </div>
+
+ 
+
 </body>
 </html>
